@@ -21,7 +21,7 @@ module.exports = postgres => {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
-        text: '', // @TODO: Authentication - Server
+        text: 'INSERT INTO users(fullname, email, password) VALUES($1, $2, $3)',
         values: [fullname, email, password]
       };
       try {
@@ -40,7 +40,7 @@ module.exports = postgres => {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: '', // @TODO: Authentication - Server
+        text: 'SELECT * FROM users WHERE email = $1',
         values: [email]
       };
       try {
@@ -73,23 +73,18 @@ module.exports = postgres => {
        */
 
       const findUserQuery = {
-        text: '', // @TODO: Basic queries
+        text: 'SELECT * FROM users WHERE id = $1',
         values: [id]
       };
-
-      /**
-       *  Refactor the following code using the error handling logic described above.
-       *  When you're done here, ensure all of the resource methods in this file
-       *  include a try catch, and throw appropriate errors.
-       *
-       *  Here is an example throw statement: throw 'User was not found.'
-       *  Customize your throw statements so the message can be used by the client.
-       */
-
-      const user = await postgres.query(findUserQuery);
-      return user;
-      // -------------------------------
+      try {
+        const user = await postgres.query(findUserQuery);
+        if (!user) throw 'User was not found.';
+        return user.rows[0];
+      } catch (e) {
+        throw 'User was not found.';
+      }
     },
+
     async getItems(idToOmit) {
       const items = await postgres.query({
         /**
@@ -103,7 +98,7 @@ module.exports = postgres => {
          *  to your query text using string interpolation
          */
 
-        text: ``,
+        text: `SELECT * FROM items ${idToOmit ? 'WHERE ownerid != $1' : ''}`,
         values: idToOmit ? [idToOmit] : []
       });
       return items.rows;
@@ -114,7 +109,7 @@ module.exports = postgres => {
          *  @TODO: Advanced queries
          *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
          */
-        text: ``,
+        text: `SELECT * FROM items WHERE ownerid = $1`,
         values: [id]
       });
       return items.rows;
@@ -125,7 +120,7 @@ module.exports = postgres => {
          *  @TODO: Advanced queries
          *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
          */
-        text: ``,
+        text: `SELECT * FROM items WHERE borrowerid = $1`,
         values: [id]
       });
       return items.rows;
@@ -135,9 +130,11 @@ module.exports = postgres => {
       const tags = await postgres.query(query);
       return tags.rows;
     },
+
     async getTagsForItem(id) {
       const tagsQuery = {
-        text: ``, // @TODO: Advanced queries
+        text:
+          'SELECT * FROM tags WHERE id IN (SELECT tagid FROM itemtags WHERE itemid = $1)',
         values: [id]
       };
 
