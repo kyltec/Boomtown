@@ -88,7 +88,7 @@ module.exports = app => {
           );
           return userBorrowed;
         } catch (e) {
-          throw new AppoloError(e);
+          throw new ApolloError(e);
         }
       }
     },
@@ -106,23 +106,22 @@ module.exports = app => {
        */
       // @TODO: Uncomment these lines after you define the Item type with these fields
       async itemowner(item, args, { pgResource }) {
-        // try{
-        //   const
-        // }
-        // @TODO: Replace this mock return statement with the correct user from Postgres
-        return {
-          id: 29,
-          fullname: 'Mock user',
-          email: 'mock@user.com',
-          bio: 'Mock user. Remove me.'
-        };
-        // -------------------------------
+        console.log(item);
+        try {
+          const itemOwner = await pgResource.getUserById(item.ownerid);
+          return itemOwner;
+        } catch (e) {
+          throw new ApolloError(e);
+        }
+      },
+      async tags(item, args, { pgResource }) {
+        try {
+          const itemTags = await pgResource.getTagsForItem(item.id);
+          return itemTags;
+        } catch (e) {
+          throw new ApolloError(e);
+        }
       }
-      // async tags() {
-      //   // @TODO: Replace this mock return statement with the correct tags for the queried Item from Postgres
-      //   return []
-      //   // -------------------------------
-      // },
       // async borrower() {
       //   /**
       //    * @TODO: Replace this mock return statement with the correct user from Postgres

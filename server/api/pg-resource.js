@@ -73,7 +73,7 @@ module.exports = postgres => {
        */
 
       const findUserQuery = {
-        text: 'SELECT * FROM users WHERE id = $1',
+        text: 'SELECT id, email, name AS fullname FROM users WHERE id = $1',
         values: [id]
       };
       try {
@@ -134,7 +134,7 @@ module.exports = postgres => {
     async getTagsForItem(id) {
       const tagsQuery = {
         text:
-          'SELECT * FROM tags WHERE id IN (SELECT tagid FROM itemtags WHERE itemid = $1)',
+          'SELECT id, name AS title FROM tags WHERE id IN (SELECT tagsid FROM itemtags WHERE itemid = $1)',
         values: [id]
       };
 
