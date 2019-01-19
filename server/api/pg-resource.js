@@ -87,17 +87,6 @@ module.exports = postgres => {
 
     async getItems(idToOmit) {
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *
-         *  Get all Items. If the idToOmit parameter has a value,
-         *  the query should only return Items were the ownerid column
-         *  does not contain the 'idToOmit'
-         *
-         *  Hint: You'll need to use a conditional AND and WHERE clause
-         *  to your query text using string interpolation
-         */
-
         text: `SELECT * FROM items ${idToOmit ? 'WHERE ownerid != $1' : ''}`,
         values: idToOmit ? [idToOmit] : []
       });
@@ -126,7 +115,7 @@ module.exports = postgres => {
       return items.rows;
     },
     async getTags() {
-      const query = `SELECT * FROM tags`;
+      const query = `SELECT id, name AS title FROM tags`;
       const tags = await postgres.query(query);
       return tags.rows;
     },
@@ -154,7 +143,7 @@ module.exports = postgres => {
        *  3) If any of the INSERT queries fail, any successful INSERT
        *     queries should be 'rolled back' to avoid 'orphan' data in the database.
        *
-       *  To achieve #3 we'll ue something called a Postgres Transaction!
+       *  To achieve #3 we'll use something called a Postgres Transaction!
        *  The code for the transaction has been provided for you, along with
        *  helpful comments to help you get started.
        *
@@ -185,6 +174,11 @@ module.exports = postgres => {
                 // Generate new Item query
                 // @TODO
                 // -------------------------------
+                const newItemQuery = {
+                  text:
+                    'INSERT INTO users(title, description, tags ) VALUES($1, $2, $3)',
+                  values: [title, description, tags]
+                };
 
                 // Insert new Item
                 // @TODO
