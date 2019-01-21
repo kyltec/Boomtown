@@ -1,5 +1,22 @@
 # Boomtown 🏙
 
+Boomtown is a web application for posting, sharing and borrowing items.
+
+##Technologies Used
+
+JavaScript
+JSON
+Postgress
+Postico
+SQL
+GraphQL
+Express
+
+## Lessons Learned
+
+How to create a database using SQL queries.
+How to create queries and resolvers.
+
 ## Server
 
 Commands must be run from the `server` directory:
@@ -89,5 +106,3 @@ Run all tests:
 ```bash
 npm run test
 ```
-
-

@@ -167,8 +167,8 @@ module.exports = postgres => {
                 };
 
                 // Upload image
-                const uploadedImage = await client.query(imageUploadQuery);
-                const imageid = uploadedImage.rows[0].id;
+                // const uploadedImage = await client.query(imageUploadQuery);
+                // const imageid = uploadedImage.rows[0].id;
 
                 // Generate image relation query
                 // @TODO
@@ -197,7 +197,7 @@ module.exports = postgres => {
                   // release the client back to the pool
                   done();
                   // Uncomment this resolve statement when you're ready!
-                  // resolve(newItem.rows[0])
+                  resolve(newItem.rows[0]);
                   // -------------------------------
                 });
               });
