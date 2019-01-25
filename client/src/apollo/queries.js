@@ -16,12 +16,14 @@ const ItemFields = gql`
       id
       title
     }
+
     itemowner {
       id
       fullname
       email
       bio
     }
+
     borrower {
       id
       fullname
@@ -31,12 +33,13 @@ const ItemFields = gql`
   }
 `;
 
-// export const ITEM_QUERY = gql`
-//   query item($id: ID!) {
-//     # @TODO: Query an item by its id and return the ItemFields fragment.
-//   }
-//   ${ItemFields}
-// `;
+export const ITEM_QUERY = gql`
+  query item($id: ID!) {
+    items(filter: $id)
+    ...ItemFields
+  }
+  ${ItemFields}
+`;
 
 export const ALL_ITEMS_QUERY = gql`
   query items($filter: ID) {
@@ -47,24 +50,31 @@ export const ALL_ITEMS_QUERY = gql`
   ${ItemFields}
 `;
 
-// export const ALL_USER_ITEMS_QUERY = gql`
-//   query user($id: ID!, $email:email, $fullname:fullname, ) {
-//     # @TODO: Query the bio, email, fullname, items, and borrowed for the user by id
-//     # Use the ItemFields fragment for the items and borrowed fields.
+export const ALL_USER_ITEMS_QUERY = gql`
+  query user($id: ID!) {
+    user(id: $id) {
+      bio
+      email
+      fullname
+      items {
+        ...ItemFields
+      }
+      borrowed {
+        ...ItemFields
+      }
+    }
+  }
+  ${ItemFields}
+`;
 
-//     user(filter: $id) {
-//       ...ItemFields
-//     }
-//   }
-//   ${ItemFields}
-// `;
-
-// export const ALL_TAGS_QUERY = gql`
-//   query tags($id: ID!) {
-//     # @TODO: Query the id and title fields for tags.
-//     tags
-//   }
-// `;
+export const ALL_TAGS_QUERY = gql`
+  query {
+    tags {
+      id
+      title
+    }
+  }
+`;
 
 // export const ADD_ITEM_MUTATION = gql`
 //   mutation addItem($item: NewItemInput!, $image: Upload!) {
