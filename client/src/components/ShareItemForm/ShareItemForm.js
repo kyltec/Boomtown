@@ -57,8 +57,12 @@ class ShareItemForm extends Component {
                   return (
                     <div className="field">
                       <TextField
-                        inputProps={input}
-                        placeholder={'Name Your Item'}
+                        id="standard-textarea"
+                        label="Name Your Item"
+                        placeholder=""
+                        multiline
+                        margin="normal"
+                        className={classes.textField}
                         fullWidth
                       />
                     </div>
@@ -72,7 +76,9 @@ class ShareItemForm extends Component {
                     <TextField
                       type="text"
                       {...input}
-                      placeholder={'Describe Your Item'}
+                      placeholder="Describe Your Item"
+                      multiline
+                      rows="4"
                       fullWidth
                     />
                   </div>
