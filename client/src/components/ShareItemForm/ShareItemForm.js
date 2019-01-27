@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import TextField from '@material-ui/core/TextField';
+import { Button, ListItemText } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+
+import styles from './styles';
 
 class ShareItemForm extends Component {
   constructor(props) {
@@ -8,55 +16,95 @@ class ShareItemForm extends Component {
     this.state = {};
   }
 
+  onSubmit(o) {
+    console.log('Submitting:', o);
+  }
+
+  validate(o) {
+    console.log('Validating:', o);
+    const error = {};
+    if (!o.name) {
+      error.name = 'Name is required';
+    }
+    if (!o.email) {
+      error.email = 'Email is required';
+    } else if (!/.*@.*\..*/.test(o.email)) {
+      error.email = 'Email invalid';
+    }
+    return error;
+  }
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
   render() {
+    const { classes, tags } = this.props;
     return (
-      <div className="email-form">
-        <h3>Email Form</h3>
+      <div className="share-form">
+        <h1>Share. Borrow. Prosper. </h1>
         <Form
           onSubmit={this.onSubmit}
           validate={this.validate}
           render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
+              <Button variant="contained" color="primary">
+                Select An Image
+              </Button>
               <Field
-                name="name"
+                name="item-name"
                 render={({ input, meta }) => {
-                  console.log('Inside name: ', meta);
                   return (
                     <div className="field">
-                      <label for="name">Name:</label>
-                      <TextField inputProps={input} />
-                      {/*<input type="text" {...input} />*/}
-                      {meta.touched &&
-                        meta.invalid && (
-                          <div
-                            className="error"
-                            style={{ color: 'red', fontSize: '10px' }}
-                          >
-                            {meta.error}
-                          </div>
-                        )}
+                      <TextField
+                        inputProps={input}
+                        placeholder={'Name Your Item'}
+                        fullWidth
+                      />
                     </div>
                   );
                 }}
               />
               <Field
-                name="email"
+                name="item-description"
                 render={({ input, meta }) => (
                   <div className="field">
-                    <label for="name">Email:</label>
-                    <input type="text" {...input} />
-                    {meta.touched &&
-                      meta.invalid && (
-                        <div
-                          className="error"
-                          style={{ color: 'red', fontSize: '10px' }}
-                        >
-                          {meta.error}
-                        </div>
-                      )}
+                    <TextField
+                      type="text"
+                      {...input}
+                      placeholder={'Describe Your Item'}
+                      fullWidth
+                    />
                   </div>
                 )}
               />
+              <Field
+                name="tag-select"
+                render={({ classes, meta }) => (
+                  <div>
+                    <FormControl fullWidth>
+                      <InputLabel htmlFor="age-simple">Add Tags</InputLabel>
+                      <Select
+                        value={tags}
+                        onChange={this.handleChange}
+                        inputProps={{
+                          name: 'item-tags',
+                          id: 'tags'
+                        }}
+                      >
+                        {tags.map(tag => (
+                          <MenuItem key={tag.id} value={tag.title}>
+                            <ListItemText primary={tag.title} />
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
+                )}
+              />
+              <Button variant="contained" type="submit">
+                Share
+              </Button>
             </form>
           )}
         />
@@ -65,4 +113,4 @@ class ShareItemForm extends Component {
   }
 }
 
-export default ShareItemForm;
+export default withStyles(styles)(ShareItemForm);

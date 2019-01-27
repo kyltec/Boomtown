@@ -4,10 +4,12 @@ import Items from '../pages/Items';
 import Profile from '../pages/Profile';
 import Share from '../pages/Share';
 import Home from '../pages/Home';
+import MenuBar from '../components/MenuBar';
 
 export default () => (
   <Fragment>
     {/* @TODO: Add your menu component here */}
+    <MenuBar />
 
     <Switch>
       {/**

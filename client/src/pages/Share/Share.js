@@ -1,6 +1,6 @@
 import React from 'react';
 /* 
-  TODO: Create ShareItemFrom and ShareItemPreview in the components dir
+  TODO:  ShareItemPreview in the components dir
   and call them from this file.
 
   ShareItemForm is the form that our User will use to add a new item 
@@ -14,8 +14,8 @@ import React from 'react';
 import ShareItemForm from '../../components/ShareItemForm';
 // import ShareItemPreview from '../../components/ShareItemPreview';
 
-const Share = ({ classes }) => {
-  return <ShareItemForm />;
+const Share = ({ classes, tags }) => {
+  return <ShareItemForm className={classes} tags={tags} />;
 };
 
 export default Share;
