@@ -2,18 +2,18 @@ const UPDATE_ITEM = 'UPDATE_ITEM';
 const RESET_IMAGE = 'RESET_IMAGE';
 const RESET_ITEM = 'RESET_ITEM';
 
-export const updateItem = item => {
-  type: UPDATE_ITEM;
-  payload: item;
-};
+export const updateItem = item => ({
+  type: UPDATE_ITEM,
+  payload: item
+});
 
-export const resetImage = () => {
-  type: RESET_IMAGE;
-};
+export const resetImage = () => ({
+  type: RESET_IMAGE
+});
 
-export const resetItem = () => {
-  type: RESET_ITEM;
-};
+export const resetItem = () => ({
+  type: RESET_ITEM
+});
 
 const initialState = {
   title: 'Name Your Item',

@@ -11,7 +11,7 @@ const MenuBar = ({ classes }) => {
     <div className={classes.root}>
       <AppBar position="static" color="primary">
         <Toolbar>
-          <Typography variant="h1" color="inherit">
+          <Typography component="p" color="inherit">
             Boomtown
           </Typography>
         </Toolbar>

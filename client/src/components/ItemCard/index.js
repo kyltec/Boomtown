@@ -1,3 +1,3 @@
-import ItemCard from './ItemsCard';
+import ItemCard from './ItemCard';
 
 export default ItemCard;

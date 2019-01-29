@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography
+} from '@material-ui/core/';
 
 import styles from './styles';
 
@@ -14,14 +16,18 @@ const ItemCard = ({ classes, item }) => {
   return (
     <Card className={classes.card}>
       <Fragment>
-        <CardMedia className={classes.media} title={item.title} />
+        <CardMedia
+          className={classes.media}
+          title={item.title}
+          image={item.imageurl}
+        />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            <h2> {item.title}</h2>
+          <Typography gutterBottom variant="title" component="h1">
+            {item.title}
           </Typography>
+          <Typography component="p">{item.description}</Typography>
           <Typography component="p">
-            <p>{item.description}</p>
-            <p>{item.tags.map(tag => tag.title)}</p>
+            {item.tags.map(tag => tag.title).join(', ')}
           </Typography>
         </CardContent>
       </Fragment>
@@ -38,4 +44,14 @@ ItemCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+ItemCard.defaultProps = {
+  item: {
+    title: 'Name Item',
+    description: 'Describe Your Item',
+    tags: [],
+    imageurl: 'http://via.placeholder.com/350x250?text=Please select an image',
+    itemowner: {},
+    created: new Date()
+  }
+};
 export default withStyles(styles)(ItemCard);

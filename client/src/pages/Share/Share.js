@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid } from '@material-ui/core';
 /* 
   TODO:  ShareItemPreview in the components dir
   and call them from this file.
@@ -12,10 +13,19 @@ import React from 'react';
 
 */
 import ShareItemForm from '../../components/ShareItemForm';
-// import ShareItemPreview from '../../components/ShareItemPreview';
+import ShareItemPreview from '../../components/ShareItemPreview';
 
 const Share = ({ classes, tags }) => {
-  return <ShareItemForm className={classes} tags={tags} />;
+  return (
+    <Grid container>
+      <Grid item>
+        <ShareItemPreview className={classes} tags={tags} />
+      </Grid>
+      <Grid item>
+        <ShareItemForm className={classes} tags={tags} />
+      </Grid>
+    </Grid>
+  );
 };
 
 export default Share;

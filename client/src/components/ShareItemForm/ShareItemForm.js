@@ -1,76 +1,151 @@
 import React, { Component } from 'react';
-import { Form, Field } from 'react-final-form';
-import TextField from '@material-ui/core/TextField';
-import { Button, ListItemText, Input } from '@material-ui/core';
-import { withStyles } from '@material-ui/core';
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import ItemCard from '../ItemCard/ItemCard';
+import { Form, Field, FormSpy } from 'react-final-form';
+import {
+  TextField,
+  Button,
+  ListItemText,
+  withStyles,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Checkbox
+} from '@material-ui/core/';
+import PropTypes from 'prop-types';
+import {
+  updateItem,
+  resetItem,
+  resetImage
+} from '../../redux/modules/ShareItem';
+import { connect } from 'react-redux';
 
 import styles from './styles';
 
 class ShareItemForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.fileInput = React.createRef();
+    this.state = {
+      fileSelected: false,
+      done: false,
+      selectedTags: []
+    };
   }
 
   onSubmit(o) {
     console.log('Submitting:', o);
   }
 
-  validate(o) {
-    console.log('Validating:', o);
-    const error = {};
-    if (!o.name) {
-      error.name = 'Name is required';
-    }
-    if (!o.email) {
-      error.email = 'Email is required';
-    } else if (!/.*@.*\..*/.test(o.email)) {
-      error.email = 'Email invalid';
-    }
-    return error;
+  generateTagsText(tags, selected) {
+    return tags
+      .map(t => (selected.indexOf(t.id) > -1 ? t.title : false))
+      .filter(e => e)
+      .join(', ');
   }
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ selectedTags: event.target.value });
   };
 
+  handleFileSelected = () => {
+    this.setState({ fileSelected: this.fileInput.current.files[0] });
+  };
+
+  dispatchUpdate(values, tags, updateItem) {
+    if (!values.imageurl && this.state.fileSelected) {
+      this.getBase64Url().then(imageurl => {
+        updateItem({
+          imageurl
+        });
+      });
+    }
+    updateItem({
+      ...values,
+      tags: this.applyTags(tags)
+    });
+  }
+
+  applyTags(tags) {
+    return (
+      tags &&
+      tags
+        .filter(t => this.state.selectedTags.indexOf(t.id) > -1)
+        .map(t => ({ title: t.title, id: t.id }))
+    );
+  }
+
+  getBase64Url() {
+    return new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        resolve(
+          `data:${this.state.fileSelected.type};base64, ${btoa(
+            e.target.result
+          )}`
+        );
+      };
+      reader.readAsBinaryString(this.state.fileSelected);
+    });
+  }
+
   render() {
-    const { classes, tags } = this.props;
+    const { classes, tags, updateItem, resetImage, resetItem } = this.props;
+    console.log(this.props);
     return (
       <div className="share-form">
         <h1>Share. Borrow. Prosper. </h1>
         <Form
           onSubmit={this.onSubmit}
-          validate={this.validate}
           render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <Button variant="contained" color="primary">
+              <FormSpy
+                subscription={{ values: true }}
+                component={({ values }) => {
+                  if (values) {
+                    this.dispatchUpdate(values, tags, updateItem);
+                  }
+                  return '';
+                }}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  this.fileInput.current.click();
+                }}
+              >
                 Select An Image
               </Button>
+              <input
+                hidden
+                type="file"
+                id="fileInput"
+                ref={this.fileInput}
+                accept="image/*"
+                onChange={event => {
+                  this.handleFileSelected();
+                }}
+              />
               <Field
-                name="item-name"
+                name="title"
                 render={({ input, meta }) => {
                   return (
-                    <div className="field">
+                    <div>
                       <TextField
                         id="standard-textarea"
                         label="Name Your Item"
-                        placeholder=""
                         multiline
                         margin="normal"
                         className={classes.textField}
+                        type="text"
+                        {...input}
                       />
                     </div>
                   );
                 }}
               />
               <Field
-                name="item-description"
+                name="description"
                 render={({ input, meta }) => (
                   <div className="field">
                     <TextField
@@ -90,18 +165,24 @@ class ShareItemForm extends Component {
                     <FormControl>
                       <InputLabel htmlFor="tagid">Add Tags</InputLabel>
                       <Select
-                        value={tags}
+                        multiple
+                        value={this.state.selectedTags}
                         onChange={this.handleChange}
-                        inputProps={{
-                          name: 'item-tags',
-                          id: 'tagid'
+                        renderValue={selected => {
+                          return this.generateTagsText(tags, selected);
                         }}
                       >
-                        {tags.map(tag => (
-                          <MenuItem key={tag.id} value={tag.title}>
-                            <ListItemText primary={tag.title} />
-                          </MenuItem>
-                        ))}
+                        {tags &&
+                          tags.map(tag => (
+                            <MenuItem key={tag.id} value={tag.id}>
+                              <Checkbox
+                                checked={
+                                  this.state.selectedTags.indexOf(tag.id) > -1
+                                }
+                              />
+                              <ListItemText primary={tag.title} />
+                            </MenuItem>
+                          ))}
                       </Select>
                     </FormControl>
                   </div>
@@ -118,4 +199,23 @@ class ShareItemForm extends Component {
   }
 }
 
-export default withStyles(styles)(ShareItemForm);
+ShareItemForm.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+const mapDispatchToProps = dispatch => ({
+  updateItem(item) {
+    dispatch(updateItem(item));
+  },
+  resetItem() {
+    dispatch(resetItem());
+  },
+  resetImage() {
+    dispatch(resetImage);
+  }
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(styles)(ShareItemForm));
