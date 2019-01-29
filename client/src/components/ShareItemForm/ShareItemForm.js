@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import TextField from '@material-ui/core/TextField';
-import { Button, ListItemText } from '@material-ui/core';
+import { Button, ListItemText, Input } from '@material-ui/core';
 import { withStyles } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import ItemCard from '../ItemCard/ItemCard';
 
 import styles from './styles';
 
@@ -63,7 +64,6 @@ class ShareItemForm extends Component {
                         multiline
                         margin="normal"
                         className={classes.textField}
-                        fullWidth
                       />
                     </div>
                   );
@@ -79,7 +79,6 @@ class ShareItemForm extends Component {
                       placeholder="Describe Your Item"
                       multiline
                       rows="4"
-                      fullWidth
                     />
                   </div>
                 )}
@@ -88,14 +87,14 @@ class ShareItemForm extends Component {
                 name="tag-select"
                 render={({ classes, meta }) => (
                   <div>
-                    <FormControl fullWidth>
-                      <InputLabel htmlFor="age-simple">Add Tags</InputLabel>
+                    <FormControl>
+                      <InputLabel htmlFor="tagid">Add Tags</InputLabel>
                       <Select
                         value={tags}
                         onChange={this.handleChange}
                         inputProps={{
                           name: 'item-tags',
-                          id: 'tags'
+                          id: 'tagid'
                         }}
                       >
                         {tags.map(tag => (

@@ -8,7 +8,6 @@ import MenuBar from '../components/MenuBar';
 
 export default () => (
   <Fragment>
-    {/* @TODO: Add your menu component here */}
     <MenuBar />
 
     <Switch>

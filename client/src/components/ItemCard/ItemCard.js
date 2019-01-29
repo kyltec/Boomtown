@@ -14,7 +14,7 @@ const ItemCard = ({ classes, item }) => {
   return (
     <Card className={classes.card}>
       <Fragment>
-        <CardMedia className={classes.media} title="Contemplative Reptile" />
+        <CardMedia className={classes.media} title={item.title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             <h2> {item.title}</h2>
