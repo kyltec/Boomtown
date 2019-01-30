@@ -17,11 +17,11 @@ import ShareItemPreview from '../../components/ShareItemPreview';
 
 const Share = ({ classes, tags }) => {
   return (
-    <Grid container spacing={32}>
-      <Grid item xs={6}>
+    <Grid container className={classes.shareFormContainer} spacing={32}>
+      <Grid item className={classes.shareItemCard} xs={6}>
         <ShareItemPreview className={classes} tags={tags} />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item className={classes.shareForm} xs={6}>
         <ShareItemForm className={classes} tags={tags} />
       </Grid>
     </Grid>

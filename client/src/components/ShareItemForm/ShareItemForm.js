@@ -94,7 +94,7 @@ class ShareItemForm extends Component {
     console.log(this.props);
     console.log(this.state.selectedTags);
     return (
-      <div className="share-form">
+      <div>
         <h1>Share. Borrow. Prosper.</h1>
         <Form
           onSubmit={this.onSubmit}
@@ -121,7 +121,7 @@ class ShareItemForm extends Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  fullWidth
+                  className={classes.addImageButton}
                   onClick={() => {
                     this.fileInput.current.click();
                   }}
@@ -131,8 +131,8 @@ class ShareItemForm extends Component {
               ) : (
                 <Button
                   variant="contained"
+                  className={classes.addImageButton}
                   color="primary"
-                  fullWidth
                   onClick={() => {
                     this.fileInput.current.value = '';
                     this.setState({ fileSelected: false });
@@ -162,8 +162,7 @@ class ShareItemForm extends Component {
                         label="Name Your Item"
                         multiline
                         margin="normal"
-                        fullWidth
-                        className={classes.textField}
+                        className={classes.addItem}
                         type="text"
                         {...input}
                       />
@@ -187,9 +186,9 @@ class ShareItemForm extends Component {
                     <TextField
                       type="text"
                       {...input}
+                      className={classes.addItem}
                       placeholder="Describe Your Item"
                       multiline
-                      fullWidth
                       rows="4"
                     />
                     {meta.touched &&
@@ -207,41 +206,41 @@ class ShareItemForm extends Component {
               <Field
                 name="tags"
                 render={({ classes, meta }) => (
-                  <div>
-                    <FormControl fullWidth>
-                      <InputLabel htmlFor="tagid">Add Tags</InputLabel>
-                      <Select
-                        multiple
-                        value={this.state.selectedTags}
-                        onChange={this.handleChange}
-                        renderValue={selected => {
-                          return this.generateTagsText(tags, selected);
-                        }}
-                      >
-                        {tags &&
-                          tags.map(tag => (
-                            <MenuItem key={tag.id} value={tag.id}>
-                              <Checkbox
-                                checked={
-                                  this.state.selectedTags.indexOf(tag.id) > -1
-                                }
-                              />
-                              <ListItemText primary={tag.title} />
-                            </MenuItem>
-                          ))}
-                      </Select>
-                    </FormControl>
-                  </div>
+                  <FormControl>
+                    <InputLabel htmlFor="tagid">Add Tags</InputLabel>
+                    <Select
+                      multiple
+                      value={this.state.selectedTags}
+                      onChange={this.handleChange}
+                      renderValue={selected => {
+                        return this.generateTagsText(tags, selected);
+                      }}
+                    >
+                      {tags &&
+                        tags.map(tag => (
+                          <MenuItem key={tag.id} value={tag.id}>
+                            <Checkbox
+                              checked={
+                                this.state.selectedTags.indexOf(tag.id) > -1
+                              }
+                            />
+                            <ListItemText primary={tag.title} />
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
                 )}
               />
-              <Button
-                variant="contained"
-                type="submit"
-                disabled={submitting || pristine || invalid}
-                color="primary"
-              >
-                Share
-              </Button>
+              <div>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  disabled={submitting || pristine || invalid}
+                  color="primary"
+                >
+                  Share
+                </Button>
+              </div>
             </form>
           )}
         />
