@@ -18,6 +18,7 @@ import {
   resetImage
 } from '../../redux/modules/ShareItem';
 import { connect } from 'react-redux';
+import { validate } from './helpers/validation';
 
 import styles from './styles';
 
@@ -91,12 +92,20 @@ class ShareItemForm extends Component {
   render() {
     const { classes, tags, updateItem, resetImage, resetItem } = this.props;
     console.log(this.props);
+    console.log(this.state.selectedTags);
     return (
       <div className="share-form">
-        <h1>Share. Borrow. Prosper. </h1>
+        <h1>Share. Borrow. Prosper.</h1>
         <Form
           onSubmit={this.onSubmit}
-          render={({ handleSubmit }) => (
+          validate={values => {
+            return validate(
+              values,
+              this.state.fileSelected,
+              this.state.selectedTags
+            );
+          }}
+          render={({ handleSubmit, pristine, submitting, invalid }) => (
             <form onSubmit={handleSubmit}>
               <FormSpy
                 subscription={{ values: true }}
@@ -107,15 +116,32 @@ class ShareItemForm extends Component {
                   return '';
                 }}
               />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  this.fileInput.current.click();
-                }}
-              >
-                Select An Image
-              </Button>
+
+              {!this.state.fileSelected ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={() => {
+                    this.fileInput.current.click();
+                  }}
+                >
+                  Select An Image
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={() => {
+                    this.fileInput.current.value = '';
+                    this.setState({ fileSelected: false });
+                    resetImage();
+                  }}
+                >
+                  Reset Image
+                </Button>
+              )}
               <input
                 hidden
                 type="file"
@@ -136,10 +162,20 @@ class ShareItemForm extends Component {
                         label="Name Your Item"
                         multiline
                         margin="normal"
+                        fullWidth
                         className={classes.textField}
                         type="text"
                         {...input}
                       />
+                      {meta.touched &&
+                        meta.invalid && (
+                          <div
+                            className="error"
+                            style={{ color: 'red', fontSize: '10px' }}
+                          >
+                            {meta.error}
+                          </div>
+                        )}
                     </div>
                   );
                 }}
@@ -153,16 +189,26 @@ class ShareItemForm extends Component {
                       {...input}
                       placeholder="Describe Your Item"
                       multiline
+                      fullWidth
                       rows="4"
                     />
+                    {meta.touched &&
+                      meta.invalid && (
+                        <div
+                          className="error"
+                          style={{ color: 'red', fontSize: '10px' }}
+                        >
+                          {meta.error}
+                        </div>
+                      )}
                   </div>
                 )}
               />
               <Field
-                name="tag-select"
+                name="tags"
                 render={({ classes, meta }) => (
                   <div>
-                    <FormControl>
+                    <FormControl fullWidth>
                       <InputLabel htmlFor="tagid">Add Tags</InputLabel>
                       <Select
                         multiple
@@ -188,7 +234,12 @@ class ShareItemForm extends Component {
                   </div>
                 )}
               />
-              <Button variant="contained" type="submit">
+              <Button
+                variant="contained"
+                type="submit"
+                disabled={submitting || pristine || invalid}
+                color="primary"
+              >
                 Share
               </Button>
             </form>
@@ -211,7 +262,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(resetItem());
   },
   resetImage() {
-    dispatch(resetImage);
+    dispatch(resetImage());
   }
 });
 
