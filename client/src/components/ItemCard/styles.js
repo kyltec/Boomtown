@@ -1,7 +1,7 @@
 const styles = {
   card: {
     maxWidth: 400,
-    maxHeight: 600
+    height: 450
   },
   media: {
     height: 250

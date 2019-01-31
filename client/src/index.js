@@ -13,16 +13,6 @@ import client from './apollo';
 
 import Layout from './routes/Layout';
 
-/**
- * @TODO: Initialize Redux Store
- *
- * Uncomment the following line when your Redux store is configured
- *
- * Below in your <App />, wrap a <ReduxProvider /> component around all
- * of the app's children, and pass it the imported `store` as the `store`
- * prop's value.
- */
-
 import store from './redux';
 
 /**

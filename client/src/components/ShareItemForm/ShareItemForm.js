@@ -95,7 +95,7 @@ class ShareItemForm extends Component {
     console.log(this.state.selectedTags);
     return (
       <div>
-        <h1>Share. Borrow. Prosper.</h1>
+        <h1 className={classes.shareFormTitle}>Share. Borrow. Prosper.</h1>
         <Form
           onSubmit={this.onSubmit}
           validate={values => {
@@ -121,6 +121,7 @@ class ShareItemForm extends Component {
                 <Button
                   variant="contained"
                   color="primary"
+                  fullWidth
                   className={classes.addImageButton}
                   onClick={() => {
                     this.fileInput.current.click();
@@ -131,7 +132,7 @@ class ShareItemForm extends Component {
               ) : (
                 <Button
                   variant="contained"
-                  className={classes.addImageButton}
+                  fullWidth
                   color="primary"
                   onClick={() => {
                     this.fileInput.current.value = '';
@@ -161,8 +162,8 @@ class ShareItemForm extends Component {
                         id="standard-textarea"
                         label="Name Your Item"
                         multiline
+                        fullWidth
                         margin="normal"
-                        className={classes.addItem}
                         type="text"
                         {...input}
                       />
@@ -186,7 +187,7 @@ class ShareItemForm extends Component {
                     <TextField
                       type="text"
                       {...input}
-                      className={classes.addItem}
+                      fullWidth
                       placeholder="Describe Your Item"
                       multiline
                       rows="4"
@@ -206,7 +207,7 @@ class ShareItemForm extends Component {
               <Field
                 name="tags"
                 render={({ classes, meta }) => (
-                  <FormControl>
+                  <FormControl fullWidth>
                     <InputLabel htmlFor="tagid">Add Tags</InputLabel>
                     <Select
                       multiple
@@ -235,6 +236,7 @@ class ShareItemForm extends Component {
                 <Button
                   variant="contained"
                   type="submit"
+                  className={classes.shareItemButton}
                   disabled={submitting || pristine || invalid}
                   color="primary"
                 >

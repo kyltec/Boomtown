@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Share from './Share';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';

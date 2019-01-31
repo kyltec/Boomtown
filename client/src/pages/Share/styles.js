@@ -5,7 +5,7 @@ const styles = theme => ({
   shareItemCard: {
     marginTop: 50
   },
-  shareForm: {}
+
 });
 
 export default styles;

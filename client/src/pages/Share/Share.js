@@ -21,7 +21,7 @@ const Share = ({ classes, tags }) => {
       <Grid item className={classes.shareItemCard} xs={6}>
         <ShareItemPreview className={classes} tags={tags} />
       </Grid>
-      <Grid item className={classes.shareForm} xs={6}>
+      <Grid item xs={5}>
         <ShareItemForm className={classes} tags={tags} />
       </Grid>
     </Grid>
