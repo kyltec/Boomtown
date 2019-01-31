@@ -63,13 +63,13 @@ module.exports = gql`
     tags: [AssignedTag!]
   }
 
-  input NewUser {
+  input SignupInput {
     fullname: String!
     email: String!
     password: String!
   }
 
-  input Login {
+  input LoginInput {
     email: String!
     password: String!
   }
@@ -85,8 +85,8 @@ module.exports = gql`
     addItem(item: NewItemInput!): Item
     #image: Upload
 
-    signup(user: NewUser!): ID!
-    login(user: Login!): ID!
+    signup(user: SignupInput!): ID
+    login(user: LoginInput!): ID
     logout: Boolean
   }
 `;
