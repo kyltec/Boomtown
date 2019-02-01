@@ -7,18 +7,17 @@ import InputLabel from '@material-ui/core/InputLabel';
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 
-  //@TODO: Uncomment the following lines when authentication is added to the form
- 
-  import { Form, Field } from 'react-final-form'
- 
-  import {
-     LOGIN_MUTATION,
-     SIGNUP_MUTATION,
-     VIEWER_QUERY
-  } from '../../apollo/queries';
-  import { graphql, compose } from 'react-apollo';
-  import validate from './helpers/validation'
- 
+//@TODO: Uncomment the following lines when authentication is added to the form
+
+import { Form, Field } from 'react-final-form';
+
+import {
+  LOGIN_MUTATION,
+  SIGNUP_MUTATION,
+  VIEWER_QUERY
+} from '../../apollo/queries';
+import { graphql, compose } from 'react-apollo';
+import validate from './helpers/validation';
 
 import styles from './styles';
 
@@ -32,7 +31,7 @@ class AccountForm extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props)
+    console.log(this.props);
 
     return (
       // @TODO: Wrap in Final Form <Form />
@@ -96,25 +95,27 @@ class AccountForm extends Component {
               variant="contained"
               size="large"
               color="secondary"
-
-              onClick ={(e)=>{
+              onClick={e => {
                 e.preventDefault();
-                if (this.state.formToggle){
-                  this.props.loginMutation({variables:{
-                    user: {
-                      email:'f@f.com',
-                      password:'f'
+                if (this.state.formToggle) {
+                  this.props.loginMutation({
+                    variables: {
+                      user: {
+                        email: 'f@f.com',
+                        password: 'f'
+                      }
                     }
-                  }})
-                }else{
-                  this.props.signupMutation({variables:{
-                    user:{
-                      fullname:"",
-                      email:"",
-                      password:""
-
+                  });
+                } else {
+                  this.props.signupMutation({
+                    variables: {
+                      user: {
+                        fullname: '',
+                        email: '',
+                        password: ''
+                      }
                     }
-                  }})
+                  });
                 }
               }}
               disabled={
@@ -152,12 +153,24 @@ class AccountForm extends Component {
 
 // @TODO: Use compose to add the login and signup mutations to this components props.
 // @TODO: Refetch the VIEWER_QUERY to reload the app and access authenticated routes.
+
+const refetchQueries = [
+  {
+    query: VIEWER_QUERY
+  }
+];
 export default compose(
   graphql(SIGNUP_MUTATION, {
-    name: 'signupMutation',
+    options: {
+      refetchQueries
+    },
+    name: 'signupMutation'
   }),
   graphql(LOGIN_MUTATION, {
-    name: 'loginMutation',
+    options: {
+      refetchQueries
+    },
+    name: 'loginMutation'
   }),
-  withStyles(styles),
+  withStyles(styles)
 )(AccountForm);

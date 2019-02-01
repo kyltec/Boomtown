@@ -87,9 +87,6 @@ export const ADD_ITEM_MUTATION = gql`
         title
       }
     }
-
-    # @TODO: Pass the item and image into the addItem mutation as arguments
-    # and return the new item id when the mutation is complete.
   }
 `;
 
@@ -97,34 +94,31 @@ export const ADD_ITEM_MUTATION = gql`
  * Auth-related queries and mutations.
  */
 
-// export const VIEWER_QUERY = gql`
-//   query {
-//     # @TODO: Query the id, email, fullname, and bio fields for the viewer.
-//   }
-// `;
-// export const LOGOUT_MUTATION = gql`
-//   mutation {
-//     # @TODO: Run the logout mutation.
-//   }
-// `;
+export const VIEWER_QUERY = gql`
+  query viewerQuery {
+    viewer {
+      id
+      email
+      fullname
+    }
+  }
+`;
+
+export const LOGOUT_MUTATION = gql`
+  mutation logout {
+    # @TODO: Run the logout mutation.
+    logout
+  }
+`;
 
 export const SIGNUP_MUTATION = gql`
   mutation signup($user: SignupInput!) {
-    # @TODO: Pass the user into the signup mutation as an argument
-    # and return the id of the new user when the mutation is complete.
-
     signup(user: $user)
-  
   }
 `;
 
 export const LOGIN_MUTATION = gql`
   mutation login($user: LoginInput!) {
-    # @TODO: Pass the user into the login mutation as an argument
-    # and return the id of the new user when the mutation is complete.
-
-    login(user:$user)
-  
-  
+    login(user: $user)
   }
 `;

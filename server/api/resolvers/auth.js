@@ -21,14 +21,12 @@ module.exports = app => {
     async signup(parent, args, context) {
       try {
         const hashedPassword = await bcrypt.hash(args.user.password, 10);
-        console.log(hashedPassword);
 
         const user = await context.pgResource.createUser({
           name: args.user.fullname,
           email: args.user.email,
           password: hashedPassword
         });
-        console.log(user);
 
         setCookie({
           tokenName: app.get('JWT_COOKIE_NAME'),
@@ -38,7 +36,6 @@ module.exports = app => {
 
         return user.id;
       } catch (e) {
-        console.log(e);
         throw new AuthenticationError(e);
       }
     },
