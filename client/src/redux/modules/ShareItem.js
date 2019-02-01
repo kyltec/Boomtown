@@ -29,10 +29,10 @@ export default (state = initialState, action) => {
     case UPDATE_ITEM: {
       return { ...state, ...action.payload };
     }
-    case RESET_IMAGE: {
+    case RESET_ITEM: {
       return { ...initialState };
     }
-    case RESET_ITEM: {
+    case RESET_IMAGE: {
       return { ...state, imageurl: initialState.imageurl };
     }
     default: {

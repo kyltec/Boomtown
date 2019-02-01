@@ -1,10 +1,13 @@
 const styles = {
   card: {
-    maxWidth: 400,
+    width: 350,
     height: 450
   },
   media: {
     height: 250
+  },
+  descriptionField: {
+    height: 50
   }
 };
 

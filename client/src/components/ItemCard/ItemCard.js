@@ -25,8 +25,14 @@ const ItemCard = ({ classes, item }) => {
           <Typography gutterBottom variant="title" component="h1">
             {item.title}
           </Typography>
-          <Typography component="p">{item.description}</Typography>
-          <Typography component="p">
+          <Typography
+            glutterBottom
+            variant="body1"
+            className={classes.descriptionField}
+          >
+            {item.description}
+          </Typography>
+          <Typography glutterBottom component="p">
             {item.tags.map(tag => tag.title).join(', ')}
           </Typography>
         </CardContent>

@@ -19,6 +19,8 @@ import {
 } from '../../redux/modules/ShareItem';
 import { connect } from 'react-redux';
 import { validate } from './helpers/validation';
+import { Mutation } from 'react-apollo';
+import { ADD_ITEM_MUTATION } from '../../apollo/queries';
 
 import styles from './styles';
 
@@ -31,10 +33,6 @@ class ShareItemForm extends Component {
       done: false,
       selectedTags: []
     };
-  }
-
-  onSubmit(o) {
-    console.log('Submitting:', o);
   }
 
   generateTagsText(tags, selected) {
@@ -96,156 +94,200 @@ class ShareItemForm extends Component {
     return (
       <div>
         <h1 className={classes.shareFormTitle}>Share. Borrow. Prosper.</h1>
-        <Form
-          onSubmit={this.onSubmit}
-          validate={values => {
-            return validate(
-              values,
-              this.state.fileSelected,
-              this.state.selectedTags
-            );
-          }}
-          render={({ handleSubmit, pristine, submitting, invalid }) => (
-            <form onSubmit={handleSubmit}>
-              <FormSpy
-                subscription={{ values: true }}
-                component={({ values }) => {
-                  if (values) {
-                    this.dispatchUpdate(values, tags, updateItem);
-                  }
-                  return '';
+        <Mutation mutation={ADD_ITEM_MUTATION}>
+          {addItemMutation => {
+            return (
+              <Form
+                onSubmit={async values => {
+                  addItemMutation({
+                    variables: {
+                      item: {
+                        ...values,
+                        tags: this.state.selectedTags.map(tag => ({
+                          id: tag,
+                          title: ''
+                        }))
+                      }
+                    }
+                  });
                 }}
-              />
-
-              {!this.state.fileSelected ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  className={classes.addImageButton}
-                  onClick={() => {
-                    this.fileInput.current.click();
-                  }}
-                >
-                  Select An Image
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                  onClick={() => {
-                    this.fileInput.current.value = '';
-                    this.setState({ fileSelected: false });
-                    resetImage();
-                  }}
-                >
-                  Reset Image
-                </Button>
-              )}
-              <input
-                hidden
-                type="file"
-                id="fileInput"
-                ref={this.fileInput}
-                accept="image/*"
-                onChange={event => {
-                  this.handleFileSelected();
-                }}
-              />
-              <Field
-                name="title"
-                render={({ input, meta }) => {
-                  return (
-                    <div>
-                      <TextField
-                        id="standard-textarea"
-                        label="Name Your Item"
-                        multiline
-                        fullWidth
-                        margin="normal"
-                        type="text"
-                        {...input}
-                      />
-                      {meta.touched &&
-                        meta.invalid && (
-                          <div
-                            className="error"
-                            style={{ color: 'red', fontSize: '10px' }}
-                          >
-                            {meta.error}
-                          </div>
-                        )}
-                    </div>
+                validate={values => {
+                  return validate(
+                    values,
+                    this.state.fileSelected,
+                    this.state.selectedTags
                   );
                 }}
-              />
-              <Field
-                name="description"
-                render={({ input, meta }) => (
-                  <div className="field">
-                    <TextField
-                      type="text"
-                      {...input}
-                      fullWidth
-                      placeholder="Describe Your Item"
-                      multiline
-                      rows="4"
+                render={({
+                  handleSubmit,
+                  pristine,
+                  submitting,
+                  invalid,
+                  form
+                }) => (
+                  <form
+                    onSubmit={event => {
+                      handleSubmit(event).then(() => {
+                        form.reset();
+                        this.fileInput.current.value = '';
+                        this.setState({ fileSelected: false });
+                        form.reset();
+                        resetItem();
+                        this.setState({ selectedTags: [] });
+                      });
+                    }}
+                  >
+                    <FormSpy
+                      subscription={{ values: true }}
+                      component={({ values }) => {
+                        if (values) {
+                          this.dispatchUpdate(values, tags, updateItem);
+                        }
+                        return '';
+                      }}
                     />
-                    {meta.touched &&
-                      meta.invalid && (
-                        <div
-                          className="error"
-                          style={{ color: 'red', fontSize: '10px' }}
-                        >
-                          {meta.error}
+
+                    {!this.state.fileSelected ? (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        className={classes.addImageButton}
+                        onClick={() => {
+                          this.fileInput.current.click();
+                        }}
+                      >
+                        Select An Image
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        color="white"
+                        onClick={() => {
+                          this.fileInput.current.value = '';
+                          this.setState({ fileSelected: false });
+                          resetImage();
+                        }}
+                      >
+                        Reset Image
+                      </Button>
+                    )}
+                    <input
+                      hidden
+                      type="file"
+                      id="fileInput"
+                      ref={this.fileInput}
+                      accept="image/*"
+                      onChange={event => {
+                        this.handleFileSelected();
+                      }}
+                    />
+                    <Field
+                      name="title"
+                      render={({ input, meta }) => {
+                        return (
+                          <div>
+                            <TextField
+                              id="standard-textarea"
+                              label="Name Your Item"
+                              multiline
+                              fullWidth
+                              margin="normal"
+                              type="text"
+                              {...input}
+                            />
+                            {meta.touched &&
+                              meta.invalid && (
+                                <div
+                                  className="error"
+                                  style={{ color: 'red', fontSize: '10px' }}
+                                >
+                                  {meta.error}
+                                </div>
+                              )}
+                          </div>
+                        );
+                      }}
+                    />
+                    <Field
+                      name="description"
+                      render={({ input, meta }) => (
+                        <div className="field">
+                          <TextField
+                            type="text"
+                            {...input}
+                            fullWidth
+                            placeholder="Describe Your Item"
+                            multiline
+                            maxLength="6"
+                            rows="4"
+                          />
+                          {meta.touched &&
+                            meta.invalid && (
+                              <div
+                                className="error"
+                                style={{ color: 'red', fontSize: '10px' }}
+                              >
+                                {meta.error}
+                              </div>
+                            )}
                         </div>
                       )}
-                  </div>
+                    />
+                    <Field
+                      name="tags"
+                      render={({ classes, meta }) => (
+                        <FormControl fullWidth>
+                          <InputLabel htmlFor="tagid">Add Tags</InputLabel>
+                          <Select
+                            multiple
+                            value={this.state.selectedTags}
+                            onChange={this.handleChange}
+                            renderValue={selected => {
+                              return this.generateTagsText(tags, selected);
+                            }}
+                          >
+                            {tags &&
+                              tags.map(tag => (
+                                <MenuItem key={tag.id} value={tag.id}>
+                                  <Checkbox
+                                    checked={
+                                      this.state.selectedTags.indexOf(tag.id) >
+                                      -1
+                                    }
+                                  />
+                                  <ListItemText primary={tag.title} />
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        </FormControl>
+                      )}
+                    />
+                    <div>
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        className={classes.shareItemButton}
+                        disabled={submitting || pristine || invalid}
+                        color="primary"
+                        // onClick={() => {
+                        //   this.fileInput.current.value = '';
+                        //   this.setState({ fileSelected: false });
+                        //   form.reset();
+                        //   resetItem();
+                        //   this.setState({ selectedTags: [] });
+                        // }}
+                      >
+                        Share
+                      </Button>
+                    </div>
+                  </form>
                 )}
               />
-              <Field
-                name="tags"
-                render={({ classes, meta }) => (
-                  <FormControl fullWidth>
-                    <InputLabel htmlFor="tagid">Add Tags</InputLabel>
-                    <Select
-                      multiple
-                      value={this.state.selectedTags}
-                      onChange={this.handleChange}
-                      renderValue={selected => {
-                        return this.generateTagsText(tags, selected);
-                      }}
-                    >
-                      {tags &&
-                        tags.map(tag => (
-                          <MenuItem key={tag.id} value={tag.id}>
-                            <Checkbox
-                              checked={
-                                this.state.selectedTags.indexOf(tag.id) > -1
-                              }
-                            />
-                            <ListItemText primary={tag.title} />
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
-                )}
-              />
-              <div>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  className={classes.shareItemButton}
-                  disabled={submitting || pristine || invalid}
-                  color="primary"
-                >
-                  Share
-                </Button>
-              </div>
-            </form>
-          )}
-        />
+            );
+          }}
+        </Mutation>
       </div>
     );
   }
