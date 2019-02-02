@@ -10,10 +10,9 @@ function setCookie({ tokenName, token, res }) {
 }
 
 function generateToken(user, secret) {
-  const { id, email, name, bio } = user;
-  const fullname = name;
+  const { id, email, fullname, bio } = user;
+  // const fullname = name;
   const token = jwt.sign({ id, email, fullname, bio }, secret);
-
   return token;
 }
 

@@ -12,13 +12,14 @@ export default () => (
   <React.Fragment>
     <ViewerContext.Consumer>
       {({ viewer, loading }) => {
+        console.log(viewer);
         if (loading) {
           return <FullScreenLoader />;
         }
         if (viewer) {
           return (
             <Fragment>
-              <MenuBar />
+              <MenuBar user={viewer} />
               <Switch>
                 <Route exact path="/items" component={Items} />
                 <Route exact path="/profile" component={Profile} />

@@ -37,7 +37,7 @@ module.exports = postgres => {
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
         text:
-          'SELECT id, name AS fullname, email, password, bio FROM users WHERE email = $1', //@TODO Authentication -- Server
+          'SELECT id, name AS fullname, email, password, bio FROM users WHERE email = $1',
         values: [email]
       };
       try {
@@ -73,7 +73,7 @@ module.exports = postgres => {
       const items = await postgres.query({
         /**
          *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
+         *  Hint: You'll need to use a LEFT INNER JOIN among others
          */
         text: `SELECT * FROM items WHERE ownerid = $1`,
         values: [id]
@@ -84,7 +84,7 @@ module.exports = postgres => {
       const items = await postgres.query({
         /**
          *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
+         * Hint: You'll need to use a LEFT INNER JOIN among others
          */
         text: `SELECT * FROM items WHERE borrowerid = $1`,
         values: [id]

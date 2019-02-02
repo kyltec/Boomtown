@@ -1,8 +1,11 @@
 const styles = theme => ({
   grid: {
-    flexGrow: 1
+    flexGrow: 1,
+    padding: 120
   },
-  gridItem: {},
+  gridItem: {
+    marginTop: 30
+  },
   control: {
     padding: theme.spacing.unit * 2
   }

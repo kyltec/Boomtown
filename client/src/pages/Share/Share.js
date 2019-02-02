@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Grid } from '@material-ui/core';
 /* 
   TODO:  ShareItemPreview in the components dir
