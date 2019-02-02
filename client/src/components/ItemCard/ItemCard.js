@@ -9,6 +9,7 @@ import {
   Button,
   Typography
 } from '@material-ui/core/';
+import { Link, withRouter } from 'react-router-dom';
 
 import styles from './styles';
 
@@ -20,19 +21,17 @@ const ItemCard = ({ classes, item }) => {
           className={classes.media}
           title={item.title}
           image={item.imageurl}
+          component={Link}
+          to={`/profile/${item.itemowner.id}`}
         />
         <CardContent>
-          <Typography gutterBottom variant="title" component="h1">
+          <Typography variant="title" component="h1">
             {item.title}
           </Typography>
-          <Typography
-            glutterBottom
-            variant="body1"
-            className={classes.descriptionField}
-          >
+          <Typography variant="body1" className={classes.descriptionField}>
             {item.description}
           </Typography>
-          <Typography glutterBottom component="p">
+          <Typography component="p">
             {item.tags.map(tag => tag.title).join(', ')}
           </Typography>
         </CardContent>
@@ -60,4 +59,4 @@ ItemCard.defaultProps = {
     created: new Date()
   }
 };
-export default withStyles(styles)(ItemCard);
+export default withRouter(withStyles(styles)(ItemCard));

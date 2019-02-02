@@ -89,8 +89,7 @@ class ShareItemForm extends Component {
 
   render() {
     const { classes, tags, updateItem, resetImage, resetItem } = this.props;
-    console.log(this.props);
-    console.log(this.state.selectedTags);
+
     return (
       <div>
         <h1 className={classes.shareFormTitle}>Share. Borrow. Prosper.</h1>
@@ -131,9 +130,8 @@ class ShareItemForm extends Component {
                         form.reset();
                         this.fileInput.current.value = '';
                         this.setState({ fileSelected: false });
-                        form.reset();
-                        resetItem();
                         this.setState({ selectedTags: [] });
+                        resetItem();
                       });
                     }}
                   >
@@ -271,13 +269,6 @@ class ShareItemForm extends Component {
                         className={classes.shareItemButton}
                         disabled={submitting || pristine || invalid}
                         color="primary"
-                        // onClick={() => {
-                        //   this.fileInput.current.value = '';
-                        //   this.setState({ fileSelected: false });
-                        //   form.reset();
-                        //   resetItem();
-                        //   this.setState({ selectedTags: [] });
-                        // }}
                       >
                         Share
                       </Button>
@@ -302,6 +293,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateItem(item));
   },
   resetItem() {
+    console.log('hhihihihi');
     dispatch(resetItem());
   },
   resetImage() {

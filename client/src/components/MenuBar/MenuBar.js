@@ -92,7 +92,7 @@ class MenuBar extends React.Component {
                       <Paper>
                         <ClickAwayListener onClickAway={this.handleClose}>
                           <MenuList>
-                            <MenuItem component={Link} to="/profile">
+                            <MenuItem component={Link} to={`/profile/`}>
                               <Fingerprint />
                               Profile
                             </MenuItem>

@@ -30,6 +30,7 @@ export default (state = initialState, action) => {
       return { ...state, ...action.payload };
     }
     case RESET_ITEM: {
+      console.log('more testing', action, initialState);
       return { ...initialState };
     }
     case RESET_IMAGE: {
