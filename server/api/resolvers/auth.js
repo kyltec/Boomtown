@@ -10,7 +10,8 @@ function setCookie({ tokenName, token, res }) {
 }
 
 function generateToken(user, secret) {
-  const { id, email, fullname, bio } = user;
+  const { id, email, name, bio } = user;
+  const fullname = name;
   const token = jwt.sign({ id, email, fullname, bio }, secret);
 
   return token;
@@ -27,6 +28,7 @@ module.exports = app => {
           email: args.user.email,
           password: hashedPassword
         });
+        console.log(user);
 
         setCookie({
           tokenName: app.get('JWT_COOKIE_NAME'),
