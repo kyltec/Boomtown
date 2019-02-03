@@ -49,14 +49,4 @@ ItemCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-// ItemCard.defaultProps = {
-//   item: {
-//     title: 'Name Item',
-//     description: 'Describe Your Item',
-//     tags: [],
-//     imageurl: 'http://via.placeholder.com/350x250?text=Please select an image',
-//     itemowner: {},
-//     created: new Date()
-//   }
-// };
 export default withRouter(withStyles(styles)(ItemCard));

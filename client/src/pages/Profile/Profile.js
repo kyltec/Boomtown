@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import ItemCard from '../../components/ItemCard';
 
 const Profile = ({ classes, profile }) => {
@@ -9,17 +9,19 @@ const Profile = ({ classes, profile }) => {
     <Fragment>
       <div className={classes.profileContainer}>
         <div>
-          <h2>{profile.fullname}</h2>
-          <p>
-            {profile.items.length} Shared Items {profile.borrowed.length}
+          <Typography className={classes.profileName}>
+            {profile.fullname}
+          </Typography>
+          <Typography className={classes.profileStats}>
+            {profile.items.length} Shared Items {profile.borrowed.length}{' '}
             Borrowed Items
-          </p>
+          </Typography>
           <p>{profile.bio}</p>
         </div>
       </div>
 
       <div>
-        <h2 className={classes.shareTitle}>Shared Items</h2>
+        <Typography className={classes.shareTitle}>Shared Items</Typography>
       </div>
       <Grid container className={classes.profileItemContainer}>
         <Grid item />

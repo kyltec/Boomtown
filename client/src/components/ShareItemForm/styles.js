@@ -4,7 +4,12 @@ const styles = theme => ({
   },
 
   shareFormTitle: {
-    fontSize: '4rem'
+    fontSize: '4rem',
+    fontWeight: 700
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 15
   }
 });
 

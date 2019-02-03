@@ -9,7 +9,8 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Checkbox
+  Checkbox,
+  Typography
 } from '@material-ui/core/';
 import PropTypes from 'prop-types';
 import {
@@ -92,7 +93,9 @@ class ShareItemForm extends Component {
 
     return (
       <div>
-        <h1 className={classes.shareFormTitle}>Share. Borrow. Prosper.</h1>
+        <Typography className={classes.shareFormTitle}>
+          Share. Borrow. Prosper.
+        </Typography>
         <Mutation mutation={ADD_ITEM_MUTATION}>
           {addItemMutation => {
             return (
@@ -197,12 +200,9 @@ class ShareItemForm extends Component {
                             />
                             {meta.touched &&
                               meta.invalid && (
-                                <div
-                                  className="error"
-                                  style={{ color: 'red', fontSize: '10px' }}
-                                >
+                                <Typography className={classes.errorText}>
                                   {meta.error}
-                                </div>
+                                </Typography>
                               )}
                           </div>
                         );
@@ -227,7 +227,9 @@ class ShareItemForm extends Component {
                                 className="error"
                                 style={{ color: 'red', fontSize: '10px' }}
                               >
-                                {meta.error}
+                                <Typography className={classes.errorText}>
+                                  {meta.error}
+                                </Typography>
                               </div>
                             )}
                         </div>

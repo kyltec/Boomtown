@@ -12,7 +12,6 @@ export default () => (
   <React.Fragment>
     <ViewerContext.Consumer>
       {({ viewer, loading }) => {
-        console.log(viewer);
         if (loading) {
           return <FullScreenLoader />;
         }

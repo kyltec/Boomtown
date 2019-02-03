@@ -11,9 +11,10 @@ import {
   ClickAwayListener,
   MenuItem,
   MenuList,
-  Grid
+  Grid,
+  Slide
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import logo from '../../images/boomtown.svg';
 import { LOGOUT_MUTATION, VIEWER_QUERY } from '../../apollo/queries';
 import { graphql, compose } from 'react-apollo';
@@ -42,7 +43,7 @@ class MenuBar extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, location } = this.props;
     const { open } = this.state;
 
     return (
@@ -52,15 +53,24 @@ class MenuBar extends React.Component {
             <Toolbar>
               <Grid item xs={9}>
                 <IconButton component={Link} to="/">
-                  <img src={logo} width="30px" />
+                  <img src={logo} width="30px" alt="Boomtown logo" />
                 </IconButton>
               </Grid>
+
               <Grid item xs={2}>
-                <Button component={Link} to="/share">
-                  <AddCircle />
-                  Share an Item
-                </Button>
+                <Slide
+                  direction="left"
+                  in={location.pathname !== '/share'}
+                  mountOnEnter
+                  unmountOnExit
+                >
+                  <Button component={Link} to="/share">
+                    <AddCircle />
+                    Share an Item
+                  </Button>
+                </Slide>
               </Grid>
+
               <Grid item xs={1}>
                 <Button
                   buttonRef={node => {
@@ -134,5 +144,6 @@ export default compose(
     },
     name: 'logoutMutation'
   }),
-  withStyles(styles)
+  withStyles(styles),
+  withRouter
 )(MenuBar);

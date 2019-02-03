@@ -12,13 +12,11 @@ module.exports = ({ app, pgResource }) => {
     typeDefs,
     resolvers
   });
-  // -------------------------------
 
   const apolloServer = new ApolloServer({
     context: ({ req }) => {
       const tokenName = app.get('JWT_COOKIE_NAME');
       const token = req ? req.cookies[tokenName] : undefined;
-      // -------------------------------
 
       return {
         pgResource,
