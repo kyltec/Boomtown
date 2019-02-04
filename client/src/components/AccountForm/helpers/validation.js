@@ -6,10 +6,10 @@ export default function validate(values, auth) {
     errors.email = 'Please enter a valid email';
   }
   if (!values.password) {
-    errors.password = 'Required';
+    errors.password = 'Password is required';
   }
   if (!auth && !values.fullname) {
-    errors.fullname = 'Required';
+    errors.fullname = 'Fullname is required';
   }
   return errors;
 }

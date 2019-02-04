@@ -1,21 +1,32 @@
 # Boomtown 🏙
 
-Boomtown is a web application for posting, sharing and borrowing items.
+Boomtown is a web application for posting, sharing and borrowing items. Both the client and server are apart of this repository.
 
-##Technologies Used
+## Technologies Used
 
-JavaScript
-JSON
-Postgress
-Postico
-SQL
-GraphQL
-Express
+### Server
 
-## Lessons Learned
+- JavaScript
 
-How to create a database using SQL queries.
-How to create queries and resolvers.
+- JSON
+
+- Postgress
+
+- Postico
+
+- SQL
+
+- GraphQL
+
+- Express
+
+### CLient
+
+- Material-UI
+
+- React-Gravatar
+
+- CSS
 
 ## Server
 
@@ -106,3 +117,15 @@ Run all tests:
 ```bash
 npm run test
 ```
+
+## Lessons Learned
+
+### Server
+
+- Create a database using SQL queries.
+- Create queries and resolvers.
+- Authenticate and validate users logging in and signing up
+
+### Client
+
+- Using material-ui to style

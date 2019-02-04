@@ -7,10 +7,6 @@ const ShareItemPreview = ({ shareItemPreview }) => {
   return <ItemCard item={shareItemPreview} />;
 };
 
-// const mapStateToProps = state => ({
-//   shareItemPreview: state.shareItemPreview
-// });
-
 const mapStateToProps = state => {
   console.log('hololololol >>', state);
   return {

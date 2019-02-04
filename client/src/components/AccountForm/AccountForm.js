@@ -25,8 +25,6 @@ class AccountForm extends Component {
     };
   }
 
-  onSubmit = async values => {};
-
   render() {
     const { classes } = this.props;
     return (
@@ -44,12 +42,14 @@ class AccountForm extends Component {
                     }
                   });
                 }}
+                validate={values => validate(values, this.state.formToggle)}
                 render={({
                   handleSubmit,
                   pristine,
                   submitting,
                   invalid,
-                  values
+                  values,
+                  form
                 }) => (
                   <form
                     onSubmit={() => {
@@ -75,6 +75,15 @@ class AccountForm extends Component {
                               value={''}
                               {...input}
                             />
+                            {meta.touched &&
+                              meta.invalid && (
+                                <div
+                                  className="error"
+                                  style={{ color: 'red', fontsize: '10px' }}
+                                >
+                                  {meta.error}
+                                </div>
+                              )}
                           </FormControl>
                         )}
                       />
@@ -93,6 +102,15 @@ class AccountForm extends Component {
                             value={''}
                             {...input}
                           />
+                          {meta.touched &&
+                            meta.invalid && (
+                              <div
+                                className="error"
+                                style={{ color: 'red', fontsize: '10px' }}
+                              >
+                                {meta.error}
+                              </div>
+                            )}
                         </FormControl>
                       )}
                     />
@@ -110,6 +128,15 @@ class AccountForm extends Component {
                             value={''}
                             {...input}
                           />
+                          {meta.touched &&
+                            meta.invalid && (
+                              <div
+                                className="error"
+                                style={{ color: 'red', fontsize: '10px' }}
+                              >
+                                {meta.error}
+                              </div>
+                            )}
                         </FormControl>
                       )}
                     />
@@ -159,7 +186,7 @@ class AccountForm extends Component {
                             className={classes.formToggle}
                             type="button"
                             onClick={() => {
-                              // @TODO: Reset the form on submit
+                              form.reset();
                               this.setState({
                                 formToggle: !this.state.formToggle
                               });

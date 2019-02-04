@@ -7,8 +7,10 @@ import {
   CardContent,
   CardMedia,
   Button,
-  Typography
+  Typography,
+  Avatar
 } from '@material-ui/core/';
+import Gravatar from 'react-gravatar';
 import { Link, withRouter } from 'react-router-dom';
 
 import styles from './styles';
@@ -25,9 +27,20 @@ const ItemCard = ({ classes, item }) => {
           to={`/profile/${item.itemowner.id}`}
         />
         <CardContent>
-          <Typography variant="title" component="h1">
-            {item.title}
-          </Typography>
+          <div className={classes.itemOwnerContainer}>
+            <div>
+              <Avatar aria-label="user" className={classes.avatar}>
+                {item.itemowner && <Gravatar email={item.itemowner.email} />}
+              </Avatar>
+            </div>
+            <div>
+              <Typography className={classes.itemOwnerName}>
+                {item.itemowner.fullname}
+              </Typography>
+            </div>
+          </div>
+          <Typography variant="title">{item.title}</Typography>
+
           <Typography variant="body1" className={classes.descriptionField}>
             {item.description}
           </Typography>
