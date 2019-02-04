@@ -20,7 +20,7 @@ Boomtown is a web application for posting, sharing and borrowing items. Both the
 
 - Express
 
-### CLient
+### Client
 
 - Material-UI
 
@@ -129,3 +129,4 @@ npm run test
 ### Client
 
 - Using material-ui to style
+- Creating forms with react final form
