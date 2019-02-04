@@ -118,6 +118,10 @@ Run all tests:
 npm run test
 ```
 
+## Author
+
+Kyle Tecson
+
 ## Lessons Learned
 
 ### Server
