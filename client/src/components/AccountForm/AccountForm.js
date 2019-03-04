@@ -15,6 +15,7 @@ import {
 import { Mutation } from 'react-apollo';
 import { graphql, compose } from 'react-apollo';
 import validate from './helpers/validation';
+import PropTypes from 'prop-types';
 import styles from './styles';
 
 class AccountForm extends Component {
@@ -43,20 +44,8 @@ class AccountForm extends Component {
                   });
                 }}
                 validate={values => validate(values, this.state.formToggle)}
-                render={({
-                  handleSubmit,
-                  pristine,
-                  submitting,
-                  invalid,
-                  values,
-                  form
-                }) => (
-                  <form
-                    onSubmit={() => {
-                      console.log('Submitted');
-                    }}
-                    className={classes.accountForm}
-                  >
+                render={({ pristine, submitting, invalid, values, form }) => (
+                  <form onSubmit={() => {}} className={classes.accountForm}>
                     {!this.state.formToggle && (
                       <Field
                         name="fullname"
@@ -217,6 +206,11 @@ const refetchQueries = [
     query: VIEWER_QUERY
   }
 ];
+
+AccountForm.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
 export default compose(
   graphql(SIGNUP_MUTATION, {
     options: {

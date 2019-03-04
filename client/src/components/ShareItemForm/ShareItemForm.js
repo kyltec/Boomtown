@@ -21,7 +21,7 @@ import {
 import { connect } from 'react-redux';
 import { validate } from './helpers/validation';
 import { Mutation } from 'react-apollo';
-import { ADD_ITEM_MUTATION } from '../../apollo/queries';
+import { ADD_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../../apollo/queries';
 
 import styles from './styles';
 
@@ -110,7 +110,12 @@ class ShareItemForm extends Component {
                           title: ''
                         }))
                       }
-                    }
+                    },
+                    refetchQueries: [
+                      {
+                        query: ALL_ITEMS_QUERY
+                      }
+                    ]
                   });
                 }}
                 validate={values => {

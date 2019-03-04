@@ -27,8 +27,12 @@ describe('GraphQL Schema', () => {
   describe('Schema', () => {
     test('Schema type definitions are valid.', async () => {
       expect(async () => {
-        const MockServer = mockServer(typeDefs);
-        await MockServer.query(`{ __schema { types { name } } }`);
+        try {
+          const MockServer = mockServer(typeDefs);
+          await MockServer.query(`{ __schema { types { name } } }`);
+        } catch (e) {
+          console.log(e);
+        }
       }).not.toThrow();
     });
 

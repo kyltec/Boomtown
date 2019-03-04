@@ -45,7 +45,6 @@ class MenuBar extends React.Component {
   render() {
     const { classes, location } = this.props;
     const { open } = this.state;
-
     return (
       <div className={classes.root}>
         <Grid container>
@@ -129,7 +128,8 @@ class MenuBar extends React.Component {
 }
 
 MenuBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 const refetchQueries = [

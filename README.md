@@ -2,30 +2,28 @@
 
 Boomtown is a web application for posting, sharing and borrowing items. Both the client and server are apart of this repository.
 
+## Screenshots
+
+<img src='./screenshots/login.png'>
+
+<img src ='./screenshots/home.png'>
+
 ## Technologies Used
 
 ### Server
 
 - JavaScript
-
 - JSON
-
 - Postgress
-
 - Postico
-
 - SQL
-
 - GraphQL
-
 - Express
 
 ### Client
 
 - Material-UI
-
 - React-Gravatar
-
 - CSS
 
 ## Server
@@ -34,7 +32,10 @@ Commands must be run from the `server` directory:
 
 ### Installation
 
+Clone this repo
+
 ```bash
+cd server directory
 npm install
 ```
 
@@ -83,6 +84,7 @@ Commands must be run from the `client` directory:
 ### Installation
 
 ```bash
+cd client directory
 npm install
 ```
 
