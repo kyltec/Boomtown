@@ -1,6 +1,6 @@
 # Boomtown 🏙
 
-Boomtown is a web application for posting, sharing and borrowing items. Both the client and server are apart of this repository.
+Boomtown is a item sharing web application where user can post items and borrow others'. The app has both client and server side code.
 
 ## Screenshots
 
@@ -8,31 +8,13 @@ Boomtown is a web application for posting, sharing and borrowing items. Both the
 
 <img src ='./screenshots/home.png'>
 
-## Technologies Used
-
-### Server
-
-- JavaScript
-- JSON
-- Postgress
-- Postico
-- SQL
-- GraphQL
-- Express
-
-### Client
-
-- Material-UI
-- React-Gravatar
-- CSS
-
 ## Server
 
 Commands must be run from the `server` directory:
 
 ### Installation
 
-Clone this repo
+- Clone this repo
 
 ```bash
 cd server directory
@@ -45,7 +27,7 @@ npm install
 npm run start:dev
 ```
 
-### Tests
+<!-- ### Tests
 
 Just linting:
 
@@ -75,7 +57,7 @@ Run all tests:
 
 ```bash
 npm run test
-```
+``` -->
 
 ## Client
 
@@ -100,7 +82,7 @@ npm start
 npm run build
 ```
 
-### Tests
+<!-- ### Tests
 
 Just linting:
 
@@ -118,21 +100,40 @@ Run all tests:
 
 ```bash
 npm run test
-```
+``` -->
+
+## Technologies Used
+
+- JavaScript
+- PostgreSQL
+  - SQL
+- GraphQL
+  - Schema Definition Language (SDL)
+- Express
+- Material-UI
+- React
+  - JSX
+  - Final Form
+  - Gravitar
+- Redux
+- bycrypt
+- JSON web tokens
+- Apollo Client
+- Apollo Server
+
+## Lessons Learned
+
+- Intro to React
+- React Router
+- Asynchronous JavaScript
+- Redux
+- Using React with Redux
+- Create a database using SQL queries.
+- Create queries and resolvers.
+- Server and Client side authentication
+- Using material-ui to style
+- Creating forms with React Final Form
 
 ## Author
 
 Kyle Tecson
-
-## Lessons Learned
-
-### Server
-
-- Create a database using SQL queries.
-- Create queries and resolvers.
-- Authenticate and validate users logging in and signing up
-
-### Client
-
-- Using material-ui to style
-- Creating forms with react final form
