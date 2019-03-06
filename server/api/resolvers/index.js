@@ -2,7 +2,7 @@ const { ApolloError } = require('apollo-server-express');
 
 const jwt = require('jsonwebtoken');
 const authMutations = require('./auth');
-const { UploadScalar, DateScalar } = require('../custom-types');
+const { DateScalar } = require('../custom-types');
 
 module.exports = app => {
   return {
@@ -101,15 +101,19 @@ module.exports = app => {
       ...authMutations(app),
 
       async addItem(parent, args, { pgResource, token }) {
-        // const image = await image;
-        const user = await jwt.decode(token, app.get('JWT_SECRET'));
-        // const user = { id: '21' };
-        const newItem = await pgResource.saveNewItem({
-          item: args.item,
-          // image: args.image,
-          user
-        });
-        return newItem;
+        try {
+          // const image = await image;
+          const user = await jwt.decode(token, app.get('JWT_SECRET'));
+          // const user = { id: '21' };
+          const newItem = await pgResource.saveNewItem({
+            item: args.item,
+            // image: args.image,
+            user
+          });
+          return newItem;
+        } catch (e) {
+          throw AppoloError(e);
+        }
       }
     }
   };
