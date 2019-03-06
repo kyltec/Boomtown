@@ -26,7 +26,6 @@ module.exports = app => {
           email: args.user.email,
           password: hashedPassword
         });
-        console.log(user);
 
         setCookie({
           tokenName: app.get('JWT_COOKIE_NAME'),

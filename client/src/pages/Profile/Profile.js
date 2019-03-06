@@ -2,10 +2,9 @@ import React, { Fragment } from 'react';
 import { Grid, Typography, Avatar, Card, CardContent } from '@material-ui/core';
 import ItemCard from '../../components/ItemCard';
 import Gravatar from 'react-gravatar';
+import PropTypes from 'prop-types';
 
 const Profile = ({ classes, profile }) => {
-  console.log(profile);
-
   return (
     <Fragment>
       <div>
@@ -41,7 +40,14 @@ const Profile = ({ classes, profile }) => {
         <Grid item />
         {profile.items.map(item => {
           return (
-            <Grid item xs={12} sm={6} md={4} className={classes.profileItems}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              className={classes.profileItems}
+              key={item.id}
+            >
               <ItemCard item={item} />
             </Grid>
           );
@@ -49,6 +55,11 @@ const Profile = ({ classes, profile }) => {
       </Grid>
     </Fragment>
   );
+};
+
+Profile.propTypes = {
+  classes: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 export default Profile;

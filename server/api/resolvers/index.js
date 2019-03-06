@@ -66,7 +66,6 @@ module.exports = app => {
 
     Item: {
       async itemowner(item, args, { pgResource }) {
-        console.log(item);
         try {
           const itemOwner = await pgResource.getUserById(item.ownerid);
           return itemOwner;

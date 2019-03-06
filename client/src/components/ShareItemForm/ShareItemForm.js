@@ -90,7 +90,6 @@ class ShareItemForm extends Component {
 
   render() {
     const { classes, tags, updateItem, resetImage, resetItem } = this.props;
-
     return (
       <div>
         <Typography className={classes.shareFormTitle}>
@@ -169,7 +168,7 @@ class ShareItemForm extends Component {
                       <Button
                         variant="contained"
                         fullWidth
-                        color="white"
+                        color="default"
                         onClick={() => {
                           this.fileInput.current.value = '';
                           this.setState({ fileSelected: false });
@@ -292,7 +291,11 @@ class ShareItemForm extends Component {
 }
 
 ShareItemForm.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.object).isRequired,
+  updateItem: PropTypes.func.isRequired,
+  resetItem: PropTypes.func.isRequired,
+  resetImage: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -300,7 +303,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateItem(item));
   },
   resetItem() {
-    console.log('hhihihihi');
     dispatch(resetItem());
   },
   resetImage() {

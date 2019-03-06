@@ -27,7 +27,7 @@ class AccountForm extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, loginMutation } = this.props;
     return (
       <Fragment>
         <Mutation mutation={SIGNUP_MUTATION}>
@@ -146,7 +146,7 @@ class AccountForm extends Component {
                             e.preventDefault();
 
                             if (this.state.formToggle) {
-                              this.props.loginMutation({
+                              loginMutation({
                                 variables: {
                                   user: {
                                     email: values.email,
@@ -208,7 +208,9 @@ const refetchQueries = [
 ];
 
 AccountForm.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  loginMutation: PropTypes.func.isRequired,
+  signupMutation: PropTypes.func.isRequired
 };
 
 export default compose(

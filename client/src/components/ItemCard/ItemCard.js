@@ -58,4 +58,9 @@ const ItemCard = ({ classes, item }) => {
   );
 };
 
+ItemCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired
+};
+
 export default withRouter(withStyles(styles)(ItemCard));
