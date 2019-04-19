@@ -49,7 +49,7 @@ module.exports = postgres => {
     },
     async getUserById(id) {
       const findUserQuery = {
-        text: 'SELECT id, email, name AS fullname FROM users WHERE id = $1', //@TODO Authentication -- Server
+        text: 'SELECT id, email, name AS fullname FROM users WHERE id = $1',
         values: [id]
       };
       try {
@@ -70,10 +70,6 @@ module.exports = postgres => {
     },
     async getItemsForUser(id) {
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *  Hint: You'll need to use a LEFT INNER JOIN among others
-         */
         text: `SELECT * FROM items WHERE ownerid = $1`,
         values: [id]
       });
@@ -81,10 +77,6 @@ module.exports = postgres => {
     },
     async getBorrowedItemsForUser(id) {
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         * Hint: You'll need to use a LEFT INNER JOIN among others
-         */
         text: `SELECT * FROM items WHERE borrowerid = $1`,
         values: [id]
       });
@@ -129,13 +121,8 @@ module.exports = postgres => {
        */
 
       return new Promise((resolve, reject) => {
-        /**
-         * Begin transaction by opening a long-lived connection
-         * to a client from the client pool.
-         */
         postgres.connect((err, client, done) => {
           try {
-            // Begin postgres transaction
             client.query('BEGIN', async err => {
               // Convert image (file stream) to Base64
               // const imageStream = image.stream.pipe(strs('base64'));
@@ -192,14 +179,13 @@ module.exports = postgres => {
                 tagRelationshipQuery
               );
 
-              // Commit the entire transaction!
               client.query('COMMIT', err => {
                 if (err) {
                   throw err;
                 }
                 // release the client back to the pool
                 done();
-                // Uncomment this resolve statement when you're ready!
+
                 resolve(insertNewItem.rows[0]);
               });
               // });
